@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BlogMapper">
+    <!--<select id="queryPersonById" resultType="com.alipay.fengya.docker.demo.mybatis.Person"-->
+            <!--parameterType="com.alipay.fengya.docker.demo.mybatis.Person">-->
+        <!--select * from Person-->
+    <!--</select>-->
+
+    <select id="queryPersonById" resultMap="personMappering"
+            parameterType="com.alipay.fengya.docker.demo.mybatis.Person">
+        select * from Person
+    </select>
+    <resultMap id="personMappering" type="com.alipay.fengya.docker.demo.mybatis.Person">
+        <result  property="time" column="gmt_create"/>
+        <result property="id" column="pid"/>
+        <result property="pid_o" column="id"/>
+        <result property="sex" column="sex" jdbcType="INTEGER" javaType="Boolean"/>
+    </resultMap>
+    <insert id="addPerson" parameterType="com.alipay.fengya.docker.demo.mybatis.Person">
+        INSERT Person(name,age,id,sex) VALUES (#{name},#{age},#{id},#{sex,javaType=Boolean,jdbcType=INTEGER })
+    </insert>
+    <update id="updatePersonById" parameterType="com.alipay.fengya.docker.demo.mybatis.Person">
+        UPDATE Person set name = #{name},age = #{age} where id = #{id}
+    </update>
+    <delete id="deletePersonById" parameterType="int">
+        DELETE FROM Person WHERE id = #{id}
+    </delete>
+</mapper>
